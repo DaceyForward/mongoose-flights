@@ -47,6 +47,40 @@ function index(req, res) {
         })
 }
 //SHOW
+
+async function show(req, res) {
+Flight.findById(req.params.id, function(err, flight) {
+    Ticket.find({flight: flight._id}, function(err, tickets) {
+      // Now you can pass both the flight and tickets in the res.render call
+        res.render('flights/show', { flight: flight, tickets })
+    });
+    
+});
+    try {
+        // Save any changes made to the movie doc
+        await flight.save();
+    } catch (err) {
+        console.log(err);
+    }
+}
+
+function show(req, res) {
+    //use findById
+    // becomes flight id
+    Flight.findById(req.params.id)
+      .then(flightDoc => {
+        console.log('this is the destination', flightDoc)
+        //console.log('this is the review', movieDoc.departures)
+        // res.render('flights/show', { flight: flightDoc.airport, title: flightDoc.arrival })
+        res.render('flights/show', { flight: flightDoc })
+      })
+      .catch(err => {
+        console.log('===err===')
+        console.log(err)
+        console.log('===err===')
+        return res.send('err creating = check terminal')
+    })
+  }
 //EDIT
 //UPDATE
 //DELETE
@@ -54,5 +88,6 @@ function index(req, res) {
 module.exports = {
     new: newFlight,
     create, 
-    index
+    index, 
+    show
 }

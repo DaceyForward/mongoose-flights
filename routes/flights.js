@@ -9,6 +9,7 @@ router.post('/', flightCtrl.create)
 //INDEX
 router.get('/', flightCtrl.index)
 //SHOW
+router.get('/:id', flightCtrl.show)
 //EDIT
 //UPDATE
 //DELETE

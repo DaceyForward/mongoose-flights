@@ -1,0 +1,81 @@
+<%- include('../partials/header') %>
+
+<section id="show-page">
+  <div>Airline: </div>
+  <div><%= flight.airline %></div>
+  <div>Airport: </div>
+  <div><%= flight.airport %></div>
+  <div>Flight Number: </div>
+  <div><%= flight.flightNo %></div>
+  <div>Departure Information: </div>
+  <div><%= flight.createdAt.toLocaleDateString() %></div>
+  <div>Destinations: </div>
+  <% if (flight.destinations.length) { %>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>Airport</th>
+        <th>Arrival Info</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% flight.destinations.forEach(function(flight) { %>
+        <tr>
+          <td><%= flight.destination %></td>
+          <td><%= flight.airport %></td>
+          <td><%= flight.arrival %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <% } else { %>
+  <h5>No Destinations Yet</h5>
+  <% } %>
+  <div>Tickets: </div>
+  <% if (flight.tickets.length) { %>
+    <table>
+      <thead>
+        <tr>
+          <th></th>
+          <th>Seat</th>
+          <th>Price</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% flight.tickets.forEach(function(ticket) { %>
+          <tr>
+            <td><%= ticket.seat %></td>
+            <td><%= ticket.price %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+    <% } else { %>
+    <h5>No Tickets Yet</h5>
+    <button type="submit" href="/flights//:id/tickets/new<%= ticket._id %>">Add New Ticket</button>
+    <% } %>
+</section>
+
+<br><br><h2>Flight Destinations</h2>
+<form id="add-destinations-form" method="POST"
+  action="/flights/<%= flight._id %>/destinations">
+    <label>Add a Destination:</label>
+    <input type="text" name="destination">
+    <label>Airport:</label>
+    <select name="airport">
+      <option value="ALB">ALB</option>
+      <option value="BOS" selected>BOS</option>
+      <option value="DFW">DFW</option>
+      <option value="DTW">DTW</option>
+      <option value="LAX">LAX</option>
+    </select>
+    <label>Arrival Date & Time:
+        <input type="datetime-local" name="arrival">
+    </label><br>
+    <input type="submit" value="Add Destination">
+</form>
+
+
+
+<%- include('../partials/footer') %>

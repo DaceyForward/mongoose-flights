@@ -52,12 +52,11 @@ async function show(req, res) {
 Flight.findById(req.params.id, function(err, flight) {
     Ticket.find({flight: flight._id}, function(err, tickets) {
       // Now you can pass both the flight and tickets in the res.render call
-        res.render('flights/show', { flight: flight, tickets })
+       res.render('partials/header', { flight, tickets, title: 'All Flights', title: 'Add Flight' })
     });
     
 });
     try {
-        // Save any changes made to the movie doc
         await flight.save();
     } catch (err) {
         console.log(err);
@@ -72,7 +71,8 @@ function show(req, res) {
         console.log('this is the destination', flightDoc)
         //console.log('this is the review', movieDoc.departures)
         // res.render('flights/show', { flight: flightDoc.airport, title: flightDoc.arrival })
-        res.render('flights/show', { flight: flightDoc })
+        res.render('flights/show', { flight: flightDoc,  title: 'All Flights', title: 'Add Flight'  })
+        //res.render('partials/header', { title: 'All Flights', title: 'Add Flight' })
       })
       .catch(err => {
         console.log('===err===')
@@ -89,5 +89,6 @@ module.exports = {
     new: newFlight,
     create, 
     index, 
+    show, 
     show
 }

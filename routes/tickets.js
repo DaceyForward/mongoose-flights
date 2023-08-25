@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const ticketsCtrl = require('../controllers/ticketsControl');
+const ensureLoggedIn = require('../config/ensureLoggedIn');
 
 // This router is mounted to a "starts with" path of '/'
 

@@ -8,10 +8,28 @@ const Flight = require('../models/flight')
 //     });
 // });
 
+async function create(req, res) {
+    const flight = await Flight.findById(req.params.id);
+  
+    // Add the user-centric info to req.body 
+    req.body.user = req.user._id;
+    req.body.userName = req.user.name;
+    req.body.userAvatar = req.user.avatar;
+  
+    // We can push (or unshift) subdocs into Mongoose arrays
+    flight.tickets.push(req.body);
+    try {
+      // Save any changes made
+      await flight.save();
+    } catch (err) {
+      console.log(err);
+    }
+    res.redirect(`/flights/${flight._id}`);
+  }
 
-// module.exports = {
-//     create
-// }
+module.exports = {
+    create
+}
 
 
 // function create(req, res) {
